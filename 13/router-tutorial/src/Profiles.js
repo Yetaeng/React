@@ -1,18 +1,24 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import Profile from  './Profile';
 import WithRouterSample from './WithRouterSample';
 
+// NavLink -> 특정 스타일 혹은 CSS 클래스 적용 가능
 const Profiles = () => {
+    const activeStyle = {
+        background: 'black',
+        color: 'white'
+    };
     return(
         <div>
             <h3>사용자 목록:</h3>
             <ul>
                 <li>
-                    <Link to="/profiles/velopert">velopert</Link>
+                    {/* NavLink는 Link와 비슷한데, 현재 경로와 Link에서 사용하는 경로가 일치할 때 특정 스타일을 적용할 수 있다. */}
+                    <NavLink activeStyle={activeStyle} to="/profiles/velopert">velopert</NavLink>
                 </li>
                 <li>
-                    <Link to="/profiles/gildong">gildong</Link>
+                    <NavLink activeStyle={activeStyle} to="/profiles/gildong">gildong</NavLink>
                 </li>
             </ul>
 {/* 기존에는 App 컴포넌트에서 두 종류의 프로필 링크를 보여주었는데, 서브라우트를 이용해서 이를 자름! */}
