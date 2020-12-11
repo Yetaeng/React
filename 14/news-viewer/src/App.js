@@ -1,20 +1,10 @@
-import React, { useState, useCallback } from 'react';
-import NewsList from './components/NewsList';
-import Categories from './components/Categories';
+import React from 'react';
+import { Route } from 'react-router-dom';
+import NewsPage from './pages/NewsPage';
 
-// App에서 category상태 useState로 관리하기
 const App = () => {
-  const [Category, setCategory] = useState('all');
-  // category 값을 업데이트하는 함수
-  const onSelect = useCallback(category => setCategory(category), []);
-
-  return (
-    <>
-      {/* category와 onSelect 함수를 Categories 컴포넌트에게 props로 전달 */}
-      <Categories category={category} onSelect={onSelect} />
-      <NewsList category={category} />
-    </>
-  );
+  // path에 ?가 들어간 것은 category 값이 선택적이라는 의미이다. (있든가 없든가)
+  return <Route path="/:category?" component={NewsPage} />;
 };
 
 export default App;
