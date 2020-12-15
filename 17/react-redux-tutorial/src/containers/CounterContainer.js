@@ -1,23 +1,23 @@
-import React from 'react';
-// import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Counter from '../components/Counter';
 import { increase, decrease } from '../modules/counter';
 
-const CounterContainer = ({ number, increase, decrease }) => {
+// useSelector로 상태 조회
+const CounterContainer = () => {
+    const number = useSelector(state => state.counter.number);
+    // useDispatch를 사용하여 액션 디스패치하기
+    // 추가로 useCallback 사용해서 컴포넌트 성능 최적화 해주기
+    const dispatch = useDispatch();
+    const onIncrease = useCallback(() => dispatch(increase()), [dispatch]);
+    const onDecrease = useCallback(() => dispatch(decrease()), [dispatch]);
     return (
-        <Counter number={number} onIncrease={increase} onDecrease={decrease} />
+        <Counter 
+            number={number} 
+            onIncrease={onIncrease}
+            onIncrease={onDecrease}
+        />
     );
 };
 
-// mapDispatchToProps에 해당하는 파라미터를 객체 형태로 넣어주기 (가장 간편한 방법)
-// 이 방법은 connect 함수가 내부적으로 bindActionCreators작업을 대신해준다.
-export default connect(
-    state => ({
-        number: state.counter.number,
-    }),
-    {
-        increase,
-        decrease,
-    },
-)(CounterContainer);
+export default CounterContainer;
