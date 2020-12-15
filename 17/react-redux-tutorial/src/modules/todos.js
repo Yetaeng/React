@@ -5,7 +5,7 @@ const TOGGLE = 'todos/TOGGLE';
 const REMOVE = 'todos/REMOVE';
 
 // 액션 생성 함수 만들기(파라미터 필요)
-export const ChangeInput = Input => ({
+export const ChangeInput = input => ({
     type: CHANGE_INPUT,
     input
 });

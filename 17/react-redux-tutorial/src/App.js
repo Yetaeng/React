@@ -1,7 +1,9 @@
 import React from 'react';
-// import Counter from './components/Counter'; -> CounterContainer로 교체
 import Todos from './components/Todos';
+// import Counter from './components/Counter'; -> CounterContainer로 교체
 import CounterContainer from './containers/CounterContainer';
+// import Todos from './components/Todos'; -> TodosContainer로 교체
+import TodosContainer from './containers/TodosContainer';
 
 const App = () => {
   return (
@@ -9,7 +11,8 @@ const App = () => {
       {/* <Counter number={0} /> */}
       <CounterContainer />
       <hr />
-      <Todos />
+      {/* <Todos /> */}
+      <TodosContainer />
     </div>
   );
 };
