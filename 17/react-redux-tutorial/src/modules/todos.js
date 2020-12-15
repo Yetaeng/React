@@ -1,4 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
+import produce from 'immer';
 
 // 액션 타입 정의하기
 const CHANGE_INPUT = 'todos/CHANGE_INPUT';
@@ -38,25 +39,27 @@ const initialState = {
     ]
 };
 
-//  handleActions로 리듀서 재작성
-// 액션 생성 함수는 액션에 필요한 추가 데이터를 모두 payload라는 이름으로 사용해서 action.payload 값을 조회하도록 구현 -> 객체 비구조화 할당 문법 사용
+//  immer 사용
 const todos = handleActions(
     {
-        [CHANGE_INPUT]: (state, { payload: input }) => ({ ...state, input}),
-        [INSERT]: (state, { payload: todo}) => ({
-            ...state,
-            todos: state.todos.concat(todo),
-        }),
-        [TOGGLE]: (state, { payload: id}) => ({
-            ...state,
-            todos: state.todos.map(todo =>
-                todo.id === id ? { ...todo, done: !todo.done } : todo,
-            ),
-        }),
-        [REMOVE]: (state, { payload: id}) => ({
-            ...state,
-            todos: state.todos.filter(todo => todo.id !== id),
-        }),
+        [CHANGE_INPUT]: (state, { payload: input }) => 
+            produce(state, draft => {
+                draft.input = input;
+            }),
+        [INSERT]: (state, { payload: todo}) => 
+            produce(state, draft => {
+                draft.todos.push(todo);
+            }),
+        [TOGGLE]: (state, { payload: id}) => 
+            produce(state, draft => {
+                const todo = draft.todos.find(todo => todo.id === id);
+                todo.done = !todo.done;
+            }),
+        [REMOVE]: (state, { payload: id}) =>
+            produce(state, draft => {
+                const index = draft.todos.findIndex(todo => todo.id === id);
+                draft.todos.splice(index, 1);
+            }),
     },
     initialState,
 );
