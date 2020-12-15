@@ -10,13 +10,17 @@ const CounterContainer = ({ number, increase, decrease }) => {
     );
 };
 
-// connect 함수를 익명 함수 형태로 선언하는 방식
+// bindActionCreators 유틸 함수 사용 <- 각 액션 생성 함수를 호출하고 dispatch로 감싸는 작업을 보다 간편하게 해줌
 export default connect(
     state => ({
         number: state.counter.number,
     }),
-    dispatch => ({
-        increase: () => dispatch(increase()),
-        decrease: () => dispatch(decrease()),
-    }),
+    dispatch =>
+        bindActionCreators(
+            {
+                increase,
+                decrease,
+            },
+            dispatch,
+        ),
 )(CounterContainer);
